@@ -23,20 +23,4 @@ export class RegisterDto {
     @IsEmail()
     @IsNotEmpty()
     email: string;
-
-    @IsArray()
-    @IsOptional()
-    favouriteArtistIds: string[];
-
-    @IsArray()
-    @IsOptional()
-    favouriteSongsIds: string[];
-
-    @IsArray()
-    @IsOptional()
-    favouriteBandsIds: string[];
-
-    @IsArray()
-    @IsOptional()
-    favouriteGenresIds: string[];
 }

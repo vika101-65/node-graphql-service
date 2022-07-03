@@ -1,4 +1,10 @@
-import { IsArray, IsDate, IsOptional, IsString } from 'class-validator';
+import {
+    IsArray,
+    IsDate,
+    IsOptional,
+    IsString,
+    Matches,
+} from 'class-validator';
 
 export class UpdateArtistDto {
     @IsOptional()
@@ -14,7 +20,7 @@ export class UpdateArtistDto {
     middleName: string;
 
     @IsOptional()
-    @IsDate()
+    @Matches(/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/)
     birthDate: string;
 
     @IsOptional()
