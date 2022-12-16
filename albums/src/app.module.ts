@@ -7,6 +7,13 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { HttpModule } from '@nestjs/axios';
 import { AuthService } from './services/auth.service';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { AlbumsResolver } from './gql/resolver/album.resolver';
+import {
+    ApolloFederationDriver,
+    ApolloFederationDriverConfig,
+} from '@nestjs/apollo';
 
 @Module({
     imports: [
@@ -21,8 +28,17 @@ import { AuthService } from './services/auth.service';
             },
         ]),
         HttpModule,
+        GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+            driver: ApolloFederationDriver,
+            typePaths: ['./**/*.graphql'],
+            definitions: {
+                path: join(process.cwd(), 'src/graphql.ts'),
+                outputAs: 'class',
+            },
+            playground: true,
+        }),
     ],
     controllers: [AppController],
-    providers: [AlbumsService, AuthService],
+    providers: [AlbumsService, AuthService, AlbumsResolver],
 })
 export class AppModule {}
