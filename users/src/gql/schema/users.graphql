@@ -1,0 +1,23 @@
+type User @key(fields: "id"){
+    id: ID!
+    firstName: String
+    lastName: String
+    password: String
+    email: String!
+}
+
+input CreateUserIput {
+  firstName: String
+  lastName: String
+  password: String
+  email: String!
+}
+
+type Query {
+  findUser(id: ID!):User
+}
+
+
+type Mutation {
+  createUser(input:CreateUserIput): User
+}

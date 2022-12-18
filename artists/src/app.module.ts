@@ -6,7 +6,10 @@ import { Artist, ArtistSchema } from './schemas/artist.schema';
 import { HttpModule } from '@nestjs/axios';
 import { AuthService } from './services/auth.service';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import {
+    ApolloFederationDriver,
+    ApolloFederationDriverConfig,
+} from '@nestjs/apollo';
 import { join } from 'path';
 
 @Module({
@@ -19,13 +22,14 @@ import { join } from 'path';
                 schema: ArtistSchema,
             },
         ]),
-        GraphQLModule.forRoot<ApolloDriverConfig>({
-            driver: ApolloDriver,
+        GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+            driver: ApolloFederationDriver,
             typePaths: ['./**/*.graphql'],
             definitions: {
                 path: join(process.cwd(), 'src/graphql.ts'),
                 outputAs: 'class',
             },
+            playground: true,
         }),
     ],
     controllers: [AppController],

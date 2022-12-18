@@ -18,7 +18,7 @@ export class Album {
 export abstract class IQuery {
     abstract album(id: string): Nullable<Album> | Promise<Nullable<Album>>;
 
-    abstract albums(limit?: Nullable<number>, offset?: Nullable<number>, filter?: Nullable<number>): Nullable<Nullable<Album>[]> | Promise<Nullable<Nullable<Album>[]>>;
+    abstract albums(limit?: Nullable<number>, offset?: Nullable<number>, filter?: Nullable<string>): Nullable<Nullable<Album>[]> | Promise<Nullable<Nullable<Album>[]>>;
 }
 
 type Nullable<T> = T | null;

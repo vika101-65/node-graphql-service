@@ -8,7 +8,6 @@ import { join } from 'path';
 import { HttpModule } from '@nestjs/axios';
 import { AuthService } from './services/auth.service';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AlbumsResolver } from './gql/resolver/album.resolver';
 import {
     ApolloFederationDriver,
@@ -17,9 +16,9 @@ import {
 
 @Module({
     imports: [
-        ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '..', 'public'),
-        }),
+        // ServeStaticModule.forRoot({
+        //     rootPath: join(__dirname, '..', 'public'),
+        // }),
         MongooseModule.forRoot(process.env.MONGO_URL),
         MongooseModule.forFeature([
             {

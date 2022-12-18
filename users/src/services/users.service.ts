@@ -15,6 +15,7 @@ export class UsersService {
     ) {}
 
     async create(registerDto: RegisterDto): Promise<User> {
+        console.log('+++++', registerDto);
         const newUser = {
             ...registerDto,
             password: await bcrypt.hash(registerDto.password, 10),

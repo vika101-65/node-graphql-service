@@ -13,14 +13,18 @@ import 'dotenv/config';
       gateway: {
         supergraphSdl: new IntrospectAndCompose({
           subgraphs: [
-            {
-              name: 'albums',
-              url: `http://localhost:${process.env.PORT_ALBUMS}/graphql`,
-            },
+            // {
+            //   name: 'albums',
+            //   url: `http://localhost:${process.env.PORT_ALBUMS}/graphql`,
+            // },
             // {
             //   name: 'artists',
-            //   url: `http://localhost:${process.env.PORT_ARTISTS}`,
+            //   url: `http://localhost:${process.env.PORT_ARTISTS}/graphql`,
             // },
+            {
+              name: 'users',
+              url: `http://localhost:${process.env.PORT_USERS}/graphql`,
+            },
           ],
         }),
       },

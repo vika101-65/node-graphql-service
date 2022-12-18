@@ -1,12 +1,14 @@
 import { Args, Query, Resolver, ResolveReference } from '@nestjs/graphql';
+import { AuthService } from 'src/services/auth.service';
 import { AlbumsService } from '../../services/albums.service';
 
 @Resolver('Album')
 export class AlbumsResolver {
-    constructor(private albumService: AlbumsService) {}
+    constructor(private albumService: AlbumsService, private k: AuthService) {}
 
     @Query()
-    album(@Args('id') id: string) {
+    async album(@Args('id') id: string) {
+        console.log('++++', await this.k.verifyToken('111'));
         return this.albumService.findOne(id);
     }
 
@@ -14,7 +16,7 @@ export class AlbumsResolver {
     albums(
         @Args('limit') limit: number,
         @Args('offset') offset: number,
-        @Args('filter') filter: number,
+        @Args('filter') filter: any,
     ) {
         return this.albumService.findAll({ limit, offset }, filter);
     }

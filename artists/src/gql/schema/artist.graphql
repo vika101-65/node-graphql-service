@@ -1,4 +1,4 @@
-type Artist {
+type Artist @key(fields: "id") {
     id: ID!
     firstName: String
     secondName: String
