@@ -8,7 +8,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export class CreateUserIput {
+export class CreateUserInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     password?: Nullable<string>;
@@ -23,12 +23,18 @@ export class User {
     email: string;
 }
 
+export class Jwt {
+    jwt?: Nullable<string>;
+}
+
 export abstract class IQuery {
     abstract findUser(id: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract jwtToken(email?: Nullable<string>, password?: Nullable<string>): Nullable<Jwt> | Promise<Nullable<Jwt>>;
 }
 
 export abstract class IMutation {
-    abstract createUser(input?: Nullable<CreateUserIput>): Nullable<User> | Promise<Nullable<User>>;
+    abstract createUser(input?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
 type Nullable<T> = T | null;

@@ -1,13 +1,14 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthService {
     constructor(private readonly httpService: HttpService) {}
 
     verifyToken(token) {
-        return this.httpService
-            .post(
+        return firstValueFrom(
+            this.httpService.post(
                 process.env.VERIFY_TOKEN_URL,
                 {},
                 {
@@ -15,7 +16,7 @@ export class AuthService {
                         authorization: token,
                     },
                 },
-            )
-            .toPromise();
+            ),
+        );
     }
 }

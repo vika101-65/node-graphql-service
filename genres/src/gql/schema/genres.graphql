@@ -1,0 +1,39 @@
+type Genre @key(fields: "id"){
+    id: ID!
+    name: String
+    description: String
+    country: String
+    year: Int
+}
+
+type DeletedCount {
+  acknowledged: Boolean
+  deletedCount: Int
+} 
+
+extend type Mutation {
+  createGenre(input:CreateGenreInput): Genre
+  deleteGenre(id: ID!): DeletedCount
+  updateGenre(input: UpdateGenreInput): Genre
+}
+
+type Query {
+  genre(id:ID!): Genre
+  genres(limit:Int, offset:Int, filter: String):[Genre]
+}
+
+input CreateGenreInput {
+  name: String
+  description: String
+  country: String
+  year: Int
+}
+
+input UpdateGenreInput {
+  id: ID!
+  name: String
+  description: String
+  country: String
+  year: Int
+}
+

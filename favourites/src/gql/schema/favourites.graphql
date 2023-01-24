@@ -1,0 +1,43 @@
+type Favourites @key(fields: "id"){
+    id: ID!
+    userId: ID
+    bands: [Band]
+    genres: [Genre]
+    artists: [Artist]
+    tracks: [Track]
+}
+
+extend type Band @key(fields: "id") {
+  id: ID! @external
+}
+
+extend type Genre @key(fields: "id") {
+  id: ID! @external
+}
+
+extend type Artist @key(fields: "id") {
+  id: ID! @external
+}
+
+extend type Track @key(fields: "id") {
+  id: ID! @external
+}
+
+type Query {
+  favourites(userId: ID): Favourites
+}
+
+input AddFavouritesInput {
+  userId: ID!
+  id: ID
+}
+
+extend type Mutation {
+  addTrackToFavourites(input:AddFavouritesInput): Favourites
+  addBandToFavourites(input:AddFavouritesInput): Favourites
+  addArtistToFavourites(input:AddFavouritesInput): Favourites
+  addGenreToFavourites(input:AddFavouritesInput): Favourites
+}
+
+
+

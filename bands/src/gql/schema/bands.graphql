@@ -1,0 +1,60 @@
+type Band @key(fields: "id"){
+    id: ID!
+    name: String
+    origin: String
+    members: [Member]
+    website: String   
+    genres: [Genre]
+}
+
+
+extend type Genre @key(fields: "id") {
+    id: ID! @external
+}
+
+type Member {
+    artist: String
+    instrument: String
+    years: [String]
+}
+
+type Query {
+    band(id:ID!): Band
+    bands(limit: Int, offset: Int, filter: String ): [Band]
+}
+
+input CreateBandInput {
+    name: String
+    origin: String
+    members: [MembersInput]
+    website: String
+    genres: [String]
+    
+}
+
+input UpdateBandInput {
+    id: ID!
+    name: String
+    origin: String
+    members: [MembersInput]
+    website: String   
+    genres: [String]
+}
+
+input MembersInput {
+    artist: String
+    instrument: String
+    years: [String]
+}
+
+type DeletedCount {
+  acknowledged: Boolean
+  deletedCount: Int
+} 
+
+type Mutation {
+    createBand(input: CreateBandInput): Band
+    deleteBand(id: ID!): DeletedCount
+    updateBand(input: UpdateBandInput): Band
+}
+

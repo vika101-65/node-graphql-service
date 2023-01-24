@@ -11,7 +11,6 @@ import {
 } from '@nestjs/apollo';
 import { join } from 'path';
 import { UsersResolver } from './gql/resolver/users.resolver';
-
 @Module({
     imports: [
         JwtModule,
@@ -30,6 +29,9 @@ import { UsersResolver } from './gql/resolver/users.resolver';
                 outputAs: 'class',
             },
             playground: true,
+            context: ({ req }) => {
+                return { jwt: req.headers.jwt };
+            },
         }),
     ],
     controllers: [AppController],

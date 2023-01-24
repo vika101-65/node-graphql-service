@@ -1,0 +1,63 @@
+type Track @key(fields: "id"){
+    id: ID!
+    title: String!
+    album: Album
+    artists: [Artist]
+    bands: [Band]
+    duration: Int
+    released: Int
+    genres: [Genre]
+}
+
+extend type Album @key(fields: "id") {
+  id: ID! @external
+}
+
+extend type Band @key(fields: "id") {
+  id: ID! @external
+} 
+
+extend type Genre @key(fields: "id") {
+  id: ID! @external
+} 
+
+extend type Artist @key(fields: "id") {
+  id: ID! @external
+} 
+
+type Query {
+  track(id: ID!): Track
+  tracks(limit: Int, offset: Int, filter: String): [Track]
+}
+
+input CreateTrackInput {
+    title: String!
+    album: String
+    artists: [String]
+    bands: [String]
+    duration: Int
+    released: Int
+    genres: [String]
+}
+
+type DeletedCount {
+  acknowledged: Boolean
+  deletedCount: Int
+} 
+
+input UpdateTrackInput {
+  id: ID!
+  title: String
+  album: String
+  artists: [String]
+  bands: [String]
+  duration: Int
+  released: Int
+  genres: [String]
+}
+
+extend type Mutation {
+  createTrack(input: CreateTrackInput): Track
+  deleteTrack(id: ID!): DeletedCount
+  updateTrack(input: UpdateTrackInput): Track
+}

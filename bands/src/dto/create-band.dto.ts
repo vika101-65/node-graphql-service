@@ -7,7 +7,7 @@ export class CreateBandDto {
 
     @IsString()
     @IsOptional()
-    origin: string;
+    origin: any;
 
     @IsArray()
     @IsOptional()

@@ -11,6 +11,7 @@ import {
     ApolloFederationDriverConfig,
 } from '@nestjs/apollo';
 import { join } from 'path';
+import { ArtistResolver } from './gql/resolver/artist.resolver';
 
 @Module({
     imports: [
@@ -33,6 +34,6 @@ import { join } from 'path';
         }),
     ],
     controllers: [AppController],
-    providers: [ArtistsService, AuthService],
+    providers: [ArtistsService, AuthService, ArtistResolver],
 })
 export class AppModule {}

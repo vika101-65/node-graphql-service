@@ -8,19 +8,19 @@ import {
 } from 'class-validator';
 
 export class RegisterDto {
-    // @IsString()
-    // @IsNotEmpty()
+    @IsString()
+    @IsNotEmpty()
     firstName: string;
 
-    // @IsString()
-    // @IsNotEmpty()
+    @IsString()
+    @IsNotEmpty()
     lastName: string;
 
-    // @Length(8)
-    // @IsNotEmpty()
+    @Length(8)
+    @IsNotEmpty()
     password: string;
 
-    // @IsEmail()
-    // @IsNotEmpty()
+    @IsEmail()
+    @IsNotEmpty()
     email: string;
 }

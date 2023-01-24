@@ -9,81 +9,78 @@ import {
     ResolveReference,
 } from '@nestjs/graphql';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { AlbumsService } from '../../services/albums.service';
+import { CreateTrackDto } from 'src/dto/create-track.dto';
+import { TracksService } from 'src/services/tracks.service';
 
-@Resolver('Album')
-export class AlbumsResolver {
-    constructor(private albumService: AlbumsService) {}
+@Resolver('Track')
+export class TracksResolver {
+    constructor(private tracksService: TracksService) {}
 
     @Query()
-    album(@Args('id') id: string) {
-        return this.albumService.findOne(id);
+    track(@Args('id') id: string) {
+        return this.tracksService.findOne(id);
     }
 
     @Query()
-    albums(
+    traks(
         @Args('limit') limit: number,
         @Args('offset') offset: number,
         @Args('filter') filter: any,
     ) {
-        return this.albumService.findAll({ limit, offset }, { filter });
+        return this.tracksService.findAll({ limit, offset }, { filter });
     }
 
     @Mutation()
     @UseGuards(AuthGuard)
-    createAlbum(@Args('input') input) {
+    createTrack(@Args('input') input) {
+        input.albumId = input.album;
         input.artistsIds = input.artists;
         input.bandsIds = input.bands;
-        input.trackIds = input.tracks;
         input.genresIds = input.genres;
-        return this.albumService.create(input);
+        return this.tracksService.create(input);
     }
 
     @Mutation()
     @UseGuards(AuthGuard)
-    deleteAlbum(@Args('id') id: string) {
-        return this.albumService.delete(id);
+    deleteTrack(@Args('id') id: string) {
+        return this.tracksService.delete(id);
     }
 
     @Mutation()
     @UseGuards(AuthGuard)
-    updateAlbum(@Args('input') input) {
+    updateTrack(@Args('input') input) {
         const { id } = input;
         delete input.id;
-        return this.albumService.update(id, input);
+        return this.tracksService.update(id, input);
+    }
+
+    @ResolveField('album')
+    album(@Parent() track) {
+        return { __typename: 'Album', id: track.albumId };
     }
 
     @ResolveField('artists')
-    artists(@Parent() album) {
+    artists(@Parent() track) {
         const artistsList = [];
-        album.artistsIds.forEach((artistIds) =>
+        track.artistsIds.forEach((artistIds) =>
             artistsList.push({ __typename: 'Artist', id: artistIds }),
         );
         return artistsList;
     }
 
     @ResolveField('bands')
-    bands(@Parent() album) {
+    bands(@Parent() track) {
         const bandsList = [];
-        album.bandsIds.forEach((bandsIds) =>
+        track.bandsIds.forEach((bandsIds) =>
             bandsList.push({ __typename: 'Artist', id: bandsIds }),
         );
         return bandsList;
     }
 
-    @ResolveField('tracks')
-    tracks(@Parent() album) {
-        const tracksList = [];
-        album.trackIds.forEach((bandsIds) =>
-            tracksList.push({ __typename: 'Track', id: bandsIds }),
-        );
-        return tracksList;
-    }
-
     @ResolveField('genres')
-    genres(@Parent() album) {
+    genres(@Parent() track) {
         const genresList = [];
-        album.genresIds.forEach((genresIds) =>
+        track.genresIds.forEach((genresIds) =>
             genresList.push({ __typename: 'Artist', id: genresIds }),
         );
         return genresList;
@@ -91,6 +88,6 @@ export class AlbumsResolver {
 
     @ResolveReference()
     resolveReference(reference: { __typename: string; id: string }) {
-        return this.albumService.findOne(reference.id);
+        return this.tracksService.findOne(reference.id);
     }
 }

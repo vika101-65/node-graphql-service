@@ -1,5 +1,6 @@
 import {
     Args,
+    Context,
     Mutation,
     Query,
     Resolver,
@@ -13,20 +14,19 @@ import { UsersService } from '../../services/users.service';
 export class UsersResolver {
     constructor(private usersService: UsersService) {}
 
-    @Mutation('createUser')
+    @Mutation()
     createUser(@Args('input') input: RegisterDto) {
-        console.log('input', input);
         return this.usersService.create(input);
     }
 
-    @Query('findUser')
+    @Query()
     findUser(@Args('id') id: string) {
         console.log('iput', id);
         return this.usersService.findOneById(id);
     }
 
-    // @ResolveReference()
-    // resolveReference(reference: { __typename: string; id: string }) {
-    //     return this.usersService.findById(reference.id);
-    // }
+    @Query()
+    jwtToken(@Args('email') email: string, @Args('password') password: string) {
+        return this.usersService.login({ email, password });
+    }
 }
